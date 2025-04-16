@@ -1,0 +1,42 @@
+<div class="movie-list-container">
+  <div class="content-wrapper">
+    <div *ngIf="error$ | async as error" class="error-message">
+      <p>{{ error }}</p>
+      <button (click)="retry()" class="retry-button">Retry</button>
+    </div>
+
+    <div *ngIf="!(loading$ | async)" class="movies-grid">
+      <div *ngFor="let movie of movies$ | async" class="movie-card">
+        <a [routerLink]="['/movie', movie.id]">
+          <img
+            [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+            [alt]="movie.title"
+          />
+          <h3>{{ movie.title }}</h3>
+          <p class="release-date">{{ movie.release_date | date : "yyyy" }}</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="pagination-wrapper"
+    *ngIf="!(loading$ | async) && !(error$ | async)"
+  >
+    <mat-paginator
+      [length]="(totalResults$ | async) || 0"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[20]"
+      [pageIndex]="currentPage - 1"
+      (page)="onPageChange($event)"
+    >
+    </mat-paginator>
+  </div>
+
+  <div *ngIf="loading$ | async" class="loading-overlay">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <p>Loading movies...</p>
+    </div>
+  </div>
+</div>

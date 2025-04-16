@@ -1,0 +1,16 @@
+<div class="movie-detail-container" *ngIf="movie">
+  <button mat-button color="accent" (click)="goBack()">⬅ Go Back</button>
+
+  <div class="movie-info">
+    <img
+      [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+      alt="{{ movie.title }}"
+    />
+    <div>
+      <h1>{{ movie.title }}</h1>
+      <p>{{ movie.overview }}</p>
+      <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+      <p><strong>Rating:</strong> ⭐ {{ movie.vote_average }}/10</p>
+    </div>
+  </div>
+</div>
